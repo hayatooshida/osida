@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Cart;
 use App\Product;
 use App\User;
+use App\Order;
+use App\OrderDetail;
 class CartController extends Controller
 {
     public function store(Request $request){
@@ -36,14 +38,33 @@ class CartController extends Controller
     }
     
     public function checkout(){
-        $cart = Cart::select('carts.*','products.name','products.price','products.description','products.image')
+        $cart = Cart::select('carts.*','products.name','products.price','products.description','products.image','products.id')
         ->where('user_id',\Auth::user()->id)
         ->join('products','products.id','=','carts.product_id')
         ->get();
         
+        $subtotal = 0;
+        
+        foreach($cart as $carts){
+            $subtotal += $carts->price * $carts->quantity;
+        }
+        
+        $order = Order::create([
+            'user_id' => \Auth::user()->id,
+            'total_price' => $subtotal,
+        ]);
+        
         $line_items = [];
         
         foreach($cart as $product){
+            
+            OrderDetail::create([
+                'product_id' => $product->product->id,
+                'order_id' => $order->id,
+                'quantity' => $product->quantity,
+                'price' => $product->price,
+            ]);
+            
            $line_item = [ 
             'name' => $product->name,
             'description' => $product->description,
@@ -58,7 +79,7 @@ class CartController extends Controller
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [$line_items],
-            'success_url' => route('product.index'),
+            'success_url' => route('cart.success'),
             'cancel_url' => route('login'),
         ]);
         
@@ -70,6 +91,17 @@ class CartController extends Controller
     
     public function destroy(Cart $cart){
         $cart->delete();
+        return redirect('/');
+    }
+    
+    public function success(){
+        $cart = Cart::all();
+        foreach($cart as $carts){
+        if($carts->user->id === \Auth::user()->id){
+            $carts->delete();
+            
+        }
+        }
         return redirect('/');
     }
 }

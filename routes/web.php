@@ -27,4 +27,8 @@ Route::post('/cart/create','CartController@store');
 Route::get('/cart','CartController@index')->name('cart.index');
 Route::get('/cart/checkout','CartController@checkout')->name('cart.checkout');
 Route::delete('/cart/{cart}','CartController@destroy')->name('cart.destroy');
+Route::get('/carts/success','CartController@success')->name('cart.success');
 Route::get('/users/{user}','UserController@show')->name('users.show');
+
+Route::get('/order{order}','OrderController@index')->name('order.index');
+Route::get('/detail{detail}','OrderDetailController@show')->name('order.details');
