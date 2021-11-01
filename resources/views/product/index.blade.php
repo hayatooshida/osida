@@ -12,9 +12,12 @@
     <div class="top__title text-center">
         All Products
     </div>
-    
-     {!! link_to_route('cart.index','カートを確認する',[],['class' => 'btn btn-primary']) !!}
+    @if(Auth::check())
      
+     {!! link_to_route('users.show','ユーザー詳細情報',['user'=>Auth::user()->id],['class'=> 'btn btn-primary']) !!}
+     {!! link_to_route('cart.index','カートの中身を見る',[],['class'=> 'btn btn-primary']) !!}
+    
+    @endif
     <div class="row">
         @foreach ($products as $product)
         <a href="{{ route('product.show', $product->id) }}" class="col-lg-4 col-md-6">
