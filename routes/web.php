@@ -21,3 +21,4 @@ Route::get('/','ProductController@index')->name('product.index');
 Route::get('/create','ProductController@create');
 Route::post('/books','ProductController@store');
 Route::get('/product/{product}','ProductController@show')->name('product.show');
+Route::delete('/products/{destroy}','ProductController@destroy')->name('product.destroy');
