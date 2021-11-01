@@ -27,9 +27,7 @@
         </div>
         {{ $product->description }}
     </div>
-    {!! Form::model($product,['route' => ['product.destroy',$product->id], 'method' => 'delete']) !!}
-      {!! Form::submit('delete',['class' => 'btn btn-danger']) !!}
-    {!! Form::close() !!}
+    
     <form method="POST" action="/cart/create" class="form-inline m-1">
          {{ csrf_field() }}
          <p>数量を入力して下さい</p>

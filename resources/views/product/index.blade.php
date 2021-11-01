@@ -13,7 +13,7 @@
         All Products
     </div>
     
-     
+     {!! link_to_route('cart.index','カートを確認する',[],['class' => 'btn btn-primary']) !!}
      
     <div class="row">
         @foreach ($products as $product)

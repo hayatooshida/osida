@@ -22,3 +22,8 @@ Route::get('/create','ProductController@create');
 Route::post('/books','ProductController@store');
 Route::get('/product/{product}','ProductController@show')->name('product.show');
 Route::delete('/products/{destroy}','ProductController@destroy')->name('product.destroy');
+
+Route::post('/cart/create','CartController@store');
+Route::get('/cart','CartController@index')->name('cart.index');
+Route::get('/cart/checkout','CartController@checkout')->name('cart.checkout');
+Route::delete('/cart/{cart}','CartController@destroy')->name('cart.destroy');
