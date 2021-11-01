@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="text-center">
-        <h1>Log in</h1>
+        <h2 style="text-align:center;">ログインまたは会員登録をされてから、お買い物をお楽しみ下さい</h2>
     </div>
 
     <div class="row">

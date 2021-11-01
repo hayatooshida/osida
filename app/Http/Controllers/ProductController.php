@@ -6,8 +6,15 @@ use Illuminate\Http\Request;
 use App\Product;
 class ProductController extends Controller
 {
-    public function index(){
-    $product = Product::all();
+    public function index(Request $request){
+    
+    if($request->has('keyword')){
+        $product = Product::where('name','like','%'.$request->get("keyword").'%')->paginate(9);
+        
+    }
+    else{
+        $product = Product::paginate(9);
+    }
     return view('product.index',[
         'products' => $product,
     ]);

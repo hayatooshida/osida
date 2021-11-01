@@ -18,10 +18,12 @@ Route::post('login', 'Auth\LoginController@login')->name('login.post');
 Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 Route::get('/','ProductController@index')->name('product.index');
+
+Route::group(['middleware' => ['auth']], function () {
 Route::get('/create','ProductController@create');
 Route::post('/books','ProductController@store');
 Route::get('/product/{product}','ProductController@show')->name('product.show');
-Route::delete('/products/{destroy}','ProductController@destroy')->name('product.destroy');
+
 
 Route::post('/cart/create','CartController@store');
 Route::get('/cart','CartController@index')->name('cart.index');
@@ -32,3 +34,4 @@ Route::get('/users/{user}','UserController@show')->name('users.show');
 
 Route::get('/order{order}','OrderController@index')->name('order.index');
 Route::get('/detail{detail}','OrderDetailController@show')->name('order.details');
+});
