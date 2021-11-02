@@ -7,7 +7,6 @@
   @section('content')
 <p>商品名で検索できます</p>
 <p>桃、柿、梨はお手数ですが、漢字で入力して下さい</p>
-<p>ぶどう、いちご、みかん、りんごは平仮名で検索して下さい</p>
 <p>それ以外は、カタカナで検索して下さい</p>
 <form method="GET" action="/">
     <input type="text" name="keyword">
