@@ -31,7 +31,12 @@ Route::get('/cart/checkout','CartController@checkout')->name('cart.checkout');
 Route::delete('/cart/{cart}','CartController@destroy')->name('cart.destroy');
 Route::get('/carts/success','CartController@success')->name('cart.success');
 Route::get('/users/{user}','UserController@show')->name('users.show');
-
+Route::get('/user/{favorites}','UserController@favorites')->name('users.favorites');
 Route::get('/order{order}','OrderController@index')->name('order.index');
 Route::get('/detail{detail}','OrderDetailController@show')->name('order.details');
+
+Route::group(['prefix' => 'products/{id}'], function () {
+        Route::post('favorite', 'FavoriteController@store')->name('favorites.favorite');
+        Route::delete('unfavorite', 'FavoriteController@destroy')->name('favorites.unfavorite');
+    });
 });

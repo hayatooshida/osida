@@ -8,7 +8,7 @@ use App\Order;
 class OrderController extends Controller
 {
     public function index($id){
-        $order = Order::select('orders.*')->where('user_id',$id)->get();
+        $order = Order::select('orders.*')->where('user_id',$id)->orderBy('created_at','desc')->paginate(5);
         
         return view('order.index',[
             'order' => $order,

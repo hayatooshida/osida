@@ -44,4 +44,41 @@ class User extends Authenticatable
     public function orders(){
         return $this->hasMany(Order::class);
     }
+    
+    public function favorites(){
+        return $this->belongsToMany(Product::class,'favorites','user_id','product_id');
+    }
+    
+    
+    public function favorite($productId){
+        $exist = $this->is_favoriting($productId);
+        
+        if($exist){
+            return false;
+        }
+        else{
+            $this->favorites()->attach($productId);
+            return true;
+        }
+    }
+    
+    public function unfavorite($productId){
+        $exist = $this->is_favoriting($productId);
+        
+        if($exist){
+            $this->favorites()->detach($productId);
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public function is_favoriting($productId){
+        return $this->favorites()->where('product_id',$productId)->exists();
+    }
+    
+    public function loadRelationshipCounts(){
+        $this->loadCount('favorites');
+    }
 }

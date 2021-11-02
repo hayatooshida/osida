@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\User;
 class ProductController extends Controller
 {
     public function index(Request $request){
@@ -22,8 +23,16 @@ class ProductController extends Controller
     
     public function show($id)
     {
-         return view('product.show')
-             ->with('product', Product::find($id));
+        
+        $product = Product::findOrFail($id);
+    
+        
+        $favorites = $product->favorite_users()->count();
+        return view('product.show',[
+            'product' => $product,
+            'favorites' => $favorites,
+           
+        ]);
     }
      
     public function create(){

@@ -12,4 +12,5 @@
 
 <p>{!! link_to_route('order.details','注文詳細を見る',['detail' => $orders->id],['class' => 'btn btn-info']) !!}</p>
 @endforeach
+{{ $order->links() }}
 @endsection
